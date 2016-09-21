@@ -1,0 +1,23 @@
+apply plugin: 'java'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testCompile "org.mockito:mockito-core:1.+"
+}
+
+version = '0.1-SNAPSHOT'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'app.Main'
+    }
+}
+
+
+apply plugin: 'application'
+
+mainClassName = "app.Main"
+

@@ -1,3 +1,13 @@
+#build folders
+build/*
+
+#gradle files
+.gradle/*
+gradle/*
+
+#intellij files
+.idea/*
+
 *.class
 
 # Mobile Tools for Java (J2ME)
