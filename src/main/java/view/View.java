@@ -46,7 +46,7 @@ public class View extends Application {
      * @param stage Primary stage of the app
      */
     public void startMain(Stage stage){
-        startScene(stage, retrieveScene("../../resources/main/main.fxml"));
+        startScene(stage, retrieveScene("/main.fxml"));
     }
 
     /**
@@ -54,11 +54,11 @@ public class View extends Application {
      * @param stage Primary stage of the app
      */
     public void startLogin(Stage stage){
-        startScene(stage, retrieveScene("../../resources/main/login.fxml"));
+        startScene(stage, retrieveScene("/login.fxml"));
     }
 
     private void startRegister(Stage stage){
-        startScene(stage, retrieveScene("../../resources/main/register.fxml"));
+        startScene(stage, retrieveScene("/register.fxml"));
     }
 
     private void startScene(Stage stage, Scene scene){
@@ -75,7 +75,7 @@ public class View extends Application {
         Parent root = null;
         FXMLLoader loader = null;
         try {
-            loader = new FXMLLoader(this.getClass().getClassLoader().getResource((pathToResource)));
+            loader = new FXMLLoader(this.getClass().getResource((pathToResource)));
             root = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,7 +88,7 @@ public class View extends Application {
         return new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
     }
 
-    public Stage getPrimaryStage(){
+    public Stage getPrimaryStage() {
         return this.primaryStage;
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.text.Text;
 import javafx.scene.control.PasswordField;
 import model.authentication.Authenticator;
 
+import view.SafePasswordField;
 import view.View;
 
 public class Controller {
@@ -14,8 +15,8 @@ public class Controller {
     private View view;
     private Authenticator authenticator;
 
-    @FXML private PasswordField registerPasswordField;
-    @FXML private PasswordField loginPasswordField;
+    @FXML private SafePasswordField registerPasswordField;
+    @FXML private SafePasswordField loginPasswordField;
     @FXML private Text passwordValid;
 
 
@@ -29,19 +30,21 @@ public class Controller {
 
     @FXML protected void handleLoginButtonAction(ActionEvent event) {
         try {
-            if ( authenticator.isPasswordValid( loginPasswordField.getText() ) )
+            if ( authenticator.isPasswordValid( loginPasswordField.getPassword() ) )
                 view.startMain(view.getPrimaryStage());
             else
                 passwordValid.setText("Password incorrect!");
-        } catch (IOException e) {
+
+        } catch (IOException | IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
     }
 
     @FXML protected void handleRegisterButtonAction(ActionEvent event) {
         try {
-            authenticator.setFirstPassword(registerPasswordField.getText());
-        } catch (IOException e) {
+            authenticator.setFirstPassword(registerPasswordField.getPassword());
+
+        } catch (IOException | IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
         view.startLogin(view.getPrimaryStage());
