@@ -36,6 +36,7 @@ public class Controller {
                 passwordValid.setText("Password incorrect!");
 
         } catch (IOException | IllegalAccessException | NoSuchFieldException e) {
+			passwordValid.setText("Could not access database, please restart application.");
             e.printStackTrace();
         }
     }
