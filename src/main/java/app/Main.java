@@ -1,7 +1,11 @@
 package app;
 
+import javafx.application.Application;
+import view.View;
+
 public class Main {
-    public static void main(String args[]) {
-        System.out.println("Hello world");
+
+    public static void main(String... args){
+        Application.launch(View.class, args);
     }
 }
