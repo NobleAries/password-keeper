@@ -15,7 +15,8 @@ public class LoginController extends Controller {
     @FXML private Text passwordValid;
 
 
-    @FXML protected void handleLoginButtonAction(ActionEvent event) {
+    @FXML
+    protected void handleLoginButtonAction(ActionEvent event) {
         try {
             if ( authenticator.isPasswordValid( loginPasswordField.getPassword() ) )
                 view.startMain(view.getPrimaryStage());

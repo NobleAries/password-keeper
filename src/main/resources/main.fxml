@@ -9,7 +9,7 @@
     <TabPane tabClosingPolicy="UNAVAILABLE">
       <Tab fx:id="homeTab" text="Home">
         <content>
-
+          <fx:include source="home.fxml"/>
         </content>
       </Tab>
 

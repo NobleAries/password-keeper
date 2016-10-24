@@ -12,7 +12,8 @@ public class RegisterController extends Controller {
     @FXML private SafePasswordField registerPasswordField;
 
 
-    @FXML protected void handleRegisterButtonAction(ActionEvent event) {
+    @FXML
+    protected void handleRegisterButtonAction(ActionEvent event) {
         try {
             authenticator.setFirstPassword(registerPasswordField.getPassword());
 

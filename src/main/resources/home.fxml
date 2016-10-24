@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
+<GridPane fx:controller="controller.HomeController"
+          xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10"
+          styleClass="root">
+
+  <padding><Insets top="15" right="15" bottom="15" left="15" /></padding>
+
+  <TableView GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+      <columns>
+          <TableColumn text="Place"/>
+          <TableColumn text="Login"/>
+          <TableColumn text="Password"/>
+      </columns>
+  </TableView>
+
+    <Button fx:id="addButton" text="Add" onAction="#handleAddButtonAction"
+            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <Button fx:id="deleteButton" text="Delete" onAction="#handleDeleteButtonAction"
+            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+</GridPane>
