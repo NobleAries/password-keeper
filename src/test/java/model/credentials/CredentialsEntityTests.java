@@ -14,7 +14,7 @@ public class CredentialsEntityTests {
         char[] mockedPassword = "testPass".toCharArray();
         char[] key = "key".toCharArray();
 
-        CredentialsEntity credentialsEntity = new CredentialsEntity("place", "username", mockedPassword, key, LocalDateTime.now(), "note");
+        CredentialsEntity credentialsEntity = new CredentialsEntity("place", "username", mockedPassword, key, "note");
         System.out.println(mockedPassword);
         System.out.println(credentialsEntity.getPassword(key));
         assertArrayEquals(mockedPassword, credentialsEntity.getPassword(key));
