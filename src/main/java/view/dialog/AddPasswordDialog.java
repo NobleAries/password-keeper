@@ -1,0 +1,40 @@
+package view.dialog;
+
+import controller.dialog.AddPasswordDialogController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.ButtonType;
+
+import java.io.IOException;
+
+public class AddPasswordDialog<CredentialsEntity> extends Dialog {
+
+    public AddPasswordDialog(){
+        Parent root = null;
+        FXMLLoader loader = null;
+
+        try {
+            loader = new FXMLLoader(this.getClass().getResource(("/add_password_dialog.fxml")));
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        AddPasswordDialogController controller = loader.getController();
+
+        this.setResultConverter(b -> {
+            if (((ButtonType)b).getText().equals("OK"))
+                return new model.credentials.CredentialsEntity( controller.getPlaceValue(),
+                                                                controller.getUserNameValue(),
+                                                                controller.getPasswordValue(),
+                                                                controller.getMainPasswordValue(),
+                                                                controller.getNoteValue());
+            return null;
+        });
+
+        this.getDialogPane().setContent(root);
+        this.setTitle("Add password");
+        this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+    }
+}

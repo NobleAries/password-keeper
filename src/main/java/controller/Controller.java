@@ -3,7 +3,7 @@ package controller;
 import model.authentication.Authenticator;
 import view.View;
 
-public abstract class Controller {
+public class Controller {
 
     View view;
     Authenticator authenticator;
