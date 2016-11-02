@@ -3,6 +3,7 @@ package view.dialog;
 import controller.dialog.AddPasswordDialogController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ButtonType;
 
@@ -24,7 +25,7 @@ public class AddPasswordDialog<CredentialsEntity> extends Dialog {
         AddPasswordDialogController controller = loader.getController();
 
         this.setResultConverter(b -> {
-            if (((ButtonType)b).getText().equals("OK"))
+            if (((ButtonType)b).getButtonData() == ButtonBar.ButtonData.OK_DONE)
                 return new model.credentials.CredentialsEntity( controller.getPlaceValue(),
                                                                 controller.getUserNameValue(),
                                                                 controller.getPasswordValue(),
