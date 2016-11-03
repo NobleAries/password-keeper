@@ -20,22 +20,12 @@ public class AddPasswordDialogController {
         return userName.getText();
     }
 
-    public char [] getPasswordValue(){
-        try {
-            return password.getPassword();
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public char [] getPasswordValue() throws NoSuchFieldException, IllegalAccessException {
+        return password.getPassword();
     }
 
-    public char [] getMainPasswordValue(){
-        try {
-            return mainPassword.getPassword();
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public char [] getMainPasswordValue() throws NoSuchFieldException, IllegalAccessException {
+        return mainPassword.getPassword();
     }
 
     public String getNoteValue(){

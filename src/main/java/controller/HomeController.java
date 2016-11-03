@@ -2,6 +2,8 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javafx.fxml.FXML;
@@ -23,6 +25,7 @@ public class HomeController extends Controller{
     private CsvPersistenceManager csvPersistenceManager = new CsvPersistenceManager(passwordsCSV);
     private ObservableList<CredentialsEntity> credentials;
 
+
     public HomeController(){
         try {
             if(!passwordsCSV.exists())
@@ -37,6 +40,7 @@ public class HomeController extends Controller{
     @FXML
     public void initialize(){
         tableView.setItems(credentials);
+
     }
 
     @FXML
@@ -46,6 +50,7 @@ public class HomeController extends Controller{
 
         if (result.isPresent()) {
             credentials.add(result.get());
+            saveCredentials(credentials);
         }
     }
 
@@ -53,5 +58,15 @@ public class HomeController extends Controller{
     protected void handleDeleteButtonAction(ActionEvent event){
         CredentialsEntity credentialsEntity = tableView.getSelectionModel().getSelectedItem();
         credentials.remove(credentialsEntity);
+        saveCredentials(credentials);
+    }
+
+
+    private void saveCredentials(List credentials){
+        try {
+            csvPersistenceManager.saveCredentials(credentials);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

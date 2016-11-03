@@ -1,6 +1,7 @@
 package view.dialog;
 
 import controller.dialog.AddPasswordDialogController;
+import encryption.EncryptionException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ButtonBar;
@@ -26,11 +27,16 @@ public class AddPasswordDialog<CredentialsEntity> extends Dialog {
 
         this.setResultConverter(b -> {
             if (((ButtonType)b).getButtonData() == ButtonBar.ButtonData.OK_DONE)
-                return new model.credentials.CredentialsEntity( controller.getPlaceValue(),
-                                                                controller.getUserNameValue(),
-                                                                controller.getPasswordValue(),
-                                                                controller.getMainPasswordValue(),
-                                                                controller.getNoteValue());
+                try {
+                    return new model.credentials.CredentialsEntity( controller.getPlaceValue(),
+                                                                    controller.getUserNameValue(),
+                                                                    controller.getPasswordValue(),
+                                                                    controller.getMainPasswordValue(),
+                                                                    controller.getNoteValue());
+                } catch (EncryptionException | IllegalAccessException | NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
+
             return null;
         });
 

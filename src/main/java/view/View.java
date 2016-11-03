@@ -18,7 +18,7 @@ public class View extends Application {
     private Authenticator authenticator;
     private Stage primaryStage;
 
-    // TODO
+    // TODO Choose name
     private Path path = Paths.get("samplename.txt");
     private static final int STAGE_WIDTH = 600;
     private static final int STAGE_HEIGHT = 400;
