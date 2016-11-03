@@ -1,5 +1,7 @@
 package model.credentials;
 
+import encryption.AesEncryption;
+import encryption.EncryptionException;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,9 +26,9 @@ public class CredentialsEntity {
      * @param key Key which will be used to encrypt password
      * @param note Additional note to credentials
      */
-    public CredentialsEntity(String place, String username, char[] password, char[] key, String note) {
+    public CredentialsEntity(String place, String username, char[] password, char[] key, String note) throws EncryptionException {
         this(place, username, note);
-        this.encryptedPassword = encryptPassword(password, key);
+        setPassword(password, key);
     }
 
     public CredentialsEntity(String place, String username, String encryptedPassword, LocalDateTime modificationDate, String note) {
@@ -42,13 +44,13 @@ public class CredentialsEntity {
         this.note.set(note);
     }
 
-    public void setPassword(char[] password, char[] key) {
-        encryptedPassword = encryptPassword(password, key);
+    public void setPassword(char[] password, char[] key) throws EncryptionException {
+        encryptedPassword = AesEncryption.encrypt(password, key);
         refreshModificationDate();
     }
 
-    public char[] getPassword(char[] key) {
-        return encryptedPassword.toCharArray();
+    public char[] getPassword(char[] key) throws EncryptionException {
+        return AesEncryption.decrypt(encryptedPassword, key);
     }
 
     public String getEncryptedPassword() {
@@ -89,10 +91,6 @@ public class CredentialsEntity {
     public void setNote(String note) {
         this.note.set(note);
         refreshModificationDate();
-    }
-
-    private String encryptPassword(char[] password, char[] passphrase) {
-        return new String(password);
     }
 
     private void refreshModificationDate() {

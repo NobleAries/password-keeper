@@ -14,10 +14,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 
-class AesEncryption {
+public class AesEncryption {
     private static final String ALGORITHM = "AES";
 
-    public String encrypt(char[] valueToEnc, char[] keyValue) throws EncryptionException {
+    public static String encrypt(char[] valueToEnc, char[] keyValue) throws EncryptionException {
         Key key = generateKey(keyValue);
         try {
             Cipher c = Cipher.getInstance(ALGORITHM);
@@ -29,7 +29,7 @@ class AesEncryption {
         }
     }
 
-    public char[] decrypt(String encryptedValue, char[] keyValue) throws EncryptionException {
+    public static char[] decrypt(String encryptedValue, char[] keyValue) throws EncryptionException {
         try {
             Key key = generateKey(keyValue);
             Cipher c = Cipher.getInstance(ALGORITHM);
@@ -46,14 +46,14 @@ class AesEncryption {
         }
     }
 
-    private Key generateKey(char[] keyValue) {
+    private static Key generateKey(char[] keyValue) {
         char[] validatedKeyValue = validateKeyValue(keyValue);
         byte[] keyBytesValue = charsToBytes(validatedKeyValue);
         return new SecretKeySpec(keyBytesValue, ALGORITHM);
     }
 
     //key has to be 16 bytes length
-    private char[] validateKeyValue(char[] keyValue) {
+    private static char[] validateKeyValue(char[] keyValue) {
         if (keyValue.length < 16) {
             char[] newKeyValue = new char[16];
             System.arraycopy(keyValue, 0, newKeyValue, 0, keyValue.length);
@@ -69,7 +69,7 @@ class AesEncryption {
         return keyValue;
     }
 
-    private byte[] charsToBytes(char[] chars) {
+    private static byte[] charsToBytes(char[] chars) {
         ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(CharBuffer.wrap(chars));
         byte[] bytes = new byte[byteBuffer.remaining()];
         byteBuffer.get(bytes);

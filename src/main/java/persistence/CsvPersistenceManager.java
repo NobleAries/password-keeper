@@ -1,6 +1,5 @@
 package persistence;
 
-
 import model.credentials.CredentialsEntity;
 
 import java.io.*;
@@ -8,6 +7,9 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Class which saves credentials entities to csv file
+ */
 public class CsvPersistenceManager implements PersistenceManager {
     private File file;
 
@@ -17,7 +19,7 @@ public class CsvPersistenceManager implements PersistenceManager {
 
     @Override
     public void saveCredentials(List<CredentialsEntity> credentialsEntities) throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false));
         for (CredentialsEntity entity : credentialsEntities) {
             bufferedWriter.write(buildCsvEntity(entity));
             bufferedWriter.newLine();
