@@ -28,9 +28,6 @@ public class HomeController extends Controller{
 
     public HomeController(){
         try {
-            if(!passwordsCSV.exists())
-                passwordsCSV.createNewFile();
-
             credentials = FXCollections.observableArrayList(csvPersistenceManager.loadCredentials());
         } catch (IOException e) {
             e.printStackTrace();
