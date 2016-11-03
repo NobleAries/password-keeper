@@ -30,20 +30,22 @@ public class CsvPersistenceManager implements PersistenceManager {
     @Override
     public List<CredentialsEntity> loadCredentials() throws IOException {
         List<CredentialsEntity> credentialsEntities = new LinkedList<>();
+        if(file.exists()) {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            String line;
+            while((line = bufferedReader.readLine()) != null) {
+                String[] entityArray = line.split(",");
+                String place = entityArray[0];
+                String username = entityArray[1];
+                String encryptedPassword = entityArray[2];
+                LocalDateTime modificationTime = LocalDateTime.parse(entityArray[3]);
+                String note = entityArray[4];
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-        String line;
-        while((line = bufferedReader.readLine()) != null) {
-            String[] entityArray = line.split(",");
-            String place = entityArray[0];
-            String username = entityArray[1];
-            String encryptedPassword = entityArray[2];
-            LocalDateTime modificationTime = LocalDateTime.parse(entityArray[3]);
-            String note = entityArray[4];
-
-            CredentialsEntity credentialsEntity = new CredentialsEntity(place, username, encryptedPassword, modificationTime, note);
-            credentialsEntities.add(credentialsEntity);
+                CredentialsEntity credentialsEntity = new CredentialsEntity(place, username, encryptedPassword, modificationTime, note);
+                credentialsEntities.add(credentialsEntity);
+            }
         }
+
         return credentialsEntities;
     }
 
