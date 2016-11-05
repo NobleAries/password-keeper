@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.matcher.base.NodeMatchers;
+
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.hasText;
 
@@ -41,7 +43,7 @@ public class ViewTest extends FxRobot{
 
     @Test
     public void shouldOpenRegisterScene() {
-        verifyThat("#setup-password", hasText("Choose password"));
+        verifyThat("#choosePasswordText", hasText("Choose password"));
         verifyThat("#registerButton", hasText("Register"));
     }
 
@@ -53,8 +55,8 @@ public class ViewTest extends FxRobot{
         clickOn("#loginPasswordField").write(password);
         clickOn("#loginButton");
 
-        // TODO Update text or element which is validated, after this part of GUI is changed.
-        verifyThat(".label", hasText("Success!"));
+        verifyThat("#homeTab", NodeMatchers.isVisible());
+        verifyThat("#preferencesTab", NodeMatchers.isVisible());
     }
 
     @Test

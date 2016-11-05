@@ -12,7 +12,7 @@ public class Controller {
         this.view = view;
     }
 
-    public void setModel(Authenticator authenticator){
+    public void setAuthenticator(Authenticator authenticator){
         this.authenticator = authenticator;
     }
 }

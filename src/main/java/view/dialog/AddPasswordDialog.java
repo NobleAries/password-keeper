@@ -8,11 +8,16 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ButtonType;
 
+
 import java.io.IOException;
+import model.authentication.Authenticator;
+import model.credentials.CredentialsEntity;
 
-public class AddPasswordDialog<CredentialsEntity> extends Dialog {
+public class AddPasswordDialog<Pair> extends Dialog {
 
-    public AddPasswordDialog(){
+    private AddPasswordDialogController controller;
+
+    public AddPasswordDialog(Authenticator authenticator){
         Parent root = null;
         FXMLLoader loader = null;
 
@@ -23,17 +28,19 @@ public class AddPasswordDialog<CredentialsEntity> extends Dialog {
             e.printStackTrace();
         }
 
-        AddPasswordDialogController controller = loader.getController();
+        controller = loader.getController();
 
         this.setResultConverter(b -> {
             if (((ButtonType)b).getButtonData() == ButtonBar.ButtonData.OK_DONE)
                 try {
-                    return new model.credentials.CredentialsEntity( controller.getPlaceValue(),
-                                                                    controller.getUserNameValue(),
-                                                                    controller.getPasswordValue(),
-                                                                    controller.getMainPasswordValue(),
-                                                                    controller.getNoteValue());
-                } catch (EncryptionException | IllegalAccessException | NoSuchFieldException e) {
+                    Boolean passwordValid = authenticator.isPasswordValid(controller.getMainPasswordValue());
+
+                    return new javafx.util.Pair<>(passwordValid, new CredentialsEntity( controller.getPlaceValue(),
+                                                                                        controller.getUserNameValue(),
+                                                                                        controller.getPasswordValue(),
+                                                                                        controller.getMainPasswordValue(),
+                                                                                        controller.getNoteValue()));
+                } catch (EncryptionException | IllegalAccessException | NoSuchFieldException | IOException e) {
                     e.printStackTrace();
                 }
 
@@ -43,5 +50,18 @@ public class AddPasswordDialog<CredentialsEntity> extends Dialog {
         this.getDialogPane().setContent(root);
         this.setTitle("Add password");
         this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+    }
+
+    public AddPasswordDialog(Authenticator authenticator, String place, String userName, String note){
+        this(authenticator);
+        setFieldValues(place, userName, note);
+        controller.setMessageValue("Main password incorrect.");
+    }
+
+
+    private void setFieldValues(String place, String userName, String note){
+        controller.setPlaceValue(place);
+        controller.setUserNameValue(userName);
+        controller.setNoteValue(note);
     }
 }

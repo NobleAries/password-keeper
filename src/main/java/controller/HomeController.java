@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javafx.util.Pair;
 import persistence.CsvPersistenceManager;
 import model.credentials.CredentialsEntity;
 import view.dialog.AddPasswordDialog;
@@ -37,16 +38,23 @@ public class HomeController extends Controller{
     @FXML
     public void initialize(){
         tableView.setItems(credentials);
-
     }
 
     @FXML
     protected void handleAddButtonAction(ActionEvent event){
-        AddPasswordDialog addPasswordDialog = new AddPasswordDialog();
-        Optional<CredentialsEntity> result = addPasswordDialog.showAndWait();
+        AddPasswordDialog addPasswordDialog = new AddPasswordDialog(authenticator);
+        Optional<Pair<Boolean, CredentialsEntity>> result = addPasswordDialog.showAndWait();
 
-        if (result.isPresent()) {
-            credentials.add(result.get());
+        while (result.isPresent()) {
+            if(result.get().getKey()) {
+                credentials.add(result.get().getValue());
+                result = Optional.empty();
+            }
+            else {
+                CredentialsEntity credentialsEntity = result.get().getValue();
+                addPasswordDialog = new AddPasswordDialog(authenticator, credentialsEntity.getPlace(), credentialsEntity.getUsername(), credentialsEntity.getNote());
+                result = addPasswordDialog.showAndWait();
+            }
             saveCredentials(credentials);
         }
     }

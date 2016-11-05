@@ -11,7 +11,7 @@
           styleClass="root">
   <padding><Insets top="25" right="25" bottom="10" left="25" /></padding>
 
-  <Text text="Choose password"
+  <Text fx:id="choosePasswordText" text="Choose password"
         GridPane.columnIndex="0" GridPane.rowIndex="0"
         GridPane.columnSpan="2"/>
 
