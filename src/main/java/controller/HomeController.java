@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +38,7 @@ public class HomeController extends Controller{
 
     @FXML
     public void initialize(){
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setItems(credentials);
     }
 
@@ -61,8 +63,8 @@ public class HomeController extends Controller{
 
     @FXML
     protected void handleDeleteButtonAction(ActionEvent event){
-        CredentialsEntity credentialsEntity = tableView.getSelectionModel().getSelectedItem();
-        credentials.remove(credentialsEntity);
+        ObservableList<CredentialsEntity> credentialsEntities = tableView.getSelectionModel().getSelectedItems();
+        credentials.removeAll(credentialsEntities);
         saveCredentials(credentials);
     }
 
