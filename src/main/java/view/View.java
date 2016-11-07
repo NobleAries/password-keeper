@@ -1,11 +1,13 @@
 package view;
 
+import controller.LoginController;
+import controller.MainController;
+import controller.RegisterController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import controller.Controller;
 import model.authentication.Authenticator;
 
 import java.io.IOException;
@@ -18,7 +20,7 @@ public class View extends Application {
     private Authenticator authenticator;
     private Stage primaryStage;
 
-    // TODO
+    // TODO Choose name
     private Path path = Paths.get("samplename.txt");
     private static final int STAGE_WIDTH = 600;
     private static final int STAGE_HEIGHT = 400;
@@ -41,54 +43,67 @@ public class View extends Application {
             startLogin(primaryStage);
     }
 
-    /**
-     * Retrieves app's main scene and then switches to it.
-     * @param stage Primary stage of the app
-     */
+    public Stage getPrimaryStage() {
+        return this.primaryStage;
+    }
+
+
     public void startMain(Stage stage){
-        startScene(stage, retrieveScene("/main.fxml"));
-    }
-
-    /**
-     * Retrieves app's login scene and then switches to it.
-     * @param stage Primary stage of the app
-     */
-    public void startLogin(Stage stage){
-        startScene(stage, retrieveScene("/login.fxml"));
-    }
-
-    private void startRegister(Stage stage){
-        startScene(stage, retrieveScene("/register.fxml"));
-    }
-
-    private void startScene(Stage stage, Scene scene){
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    /**
-     * This method loads scene from provided resource file. Next it retrieves the resource's controller and sets Model and View to it.
-     * @param pathToResource Absolute or relative path to fxml file as String, since getResource method accepts only Strings.
-     * @return Scene loaded from provided resource file.
-     */
-    private Scene retrieveScene(String pathToResource){
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/main.fxml"));
         Parent root = null;
-        FXMLLoader loader = null;
+
         try {
-            loader = new FXMLLoader(this.getClass().getResource((pathToResource)));
             root = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Controller controller = loader.getController();
+        MainController controller = loader.getController();
         controller.setView(this);
-        controller.setModel(authenticator);
+        controller.setAuthenticator(authenticator);
 
-        return new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
+        startScene(stage, new Scene(root, STAGE_WIDTH, STAGE_HEIGHT));
+
+        // This method had to be invoked after the Scene was shown, because in other case it kept setting View and Authenticator to some ambiguous HomeController instance.
+        controller.updateChildrenViewAndController();
     }
 
-    public Stage getPrimaryStage() {
-        return this.primaryStage;
+    public void startLogin(Stage stage){
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/login.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        LoginController controller = loader.getController();
+        controller.setView(this);
+        controller.setAuthenticator(authenticator);
+
+        startScene(stage, new Scene(root, STAGE_WIDTH, STAGE_HEIGHT));
+    }
+
+    private void startRegister(Stage stage){
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/register.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        RegisterController controller = loader.getController();
+        controller.setView(this);
+        controller.setAuthenticator(authenticator);
+
+        startScene(stage, new Scene(root, STAGE_WIDTH, STAGE_HEIGHT));
+    }
+
+    private void startScene(Stage stage, Scene scene){
+        stage.setScene(scene);
+        stage.show();
     }
 }

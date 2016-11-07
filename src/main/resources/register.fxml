@@ -6,12 +6,12 @@
 <?import javafx.scene.text.*?>
 <?import view.SafePasswordField?>
 
-<GridPane fx:controller="controller.Controller"
+<GridPane fx:controller="controller.RegisterController"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"
           styleClass="root">
   <padding><Insets top="25" right="25" bottom="10" left="25" /></padding>
 
-  <Text id="setup-password" text="Choose password"
+  <Text fx:id="choosePasswordText" text="Choose password"
         GridPane.columnIndex="0" GridPane.rowIndex="0"
         GridPane.columnSpan="2"/>
 
