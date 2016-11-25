@@ -1,28 +1,31 @@
 package view.dialog;
 
-import controller.dialog.AddPasswordDialogController;
+import controller.dialog.EntityDialogController;
 import encryption.EncryptionException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ButtonType;
-
-
 import java.io.IOException;
+
 import model.authentication.Authenticator;
 import model.credentials.CredentialsEntity;
 
-public class AddPasswordDialog<Pair> extends Dialog {
 
-    private AddPasswordDialogController controller;
+public class EntityDialog<Pair> extends Dialog {
 
-    public AddPasswordDialog(Authenticator authenticator){
+    public final static String ADD_PASSWORD_TITLE = "Add password";
+    public final static String EDIT_PASSWORD_TITLE = "Edit password";
+
+    private EntityDialogController controller;
+
+    public EntityDialog(Authenticator authenticator, String title, String message){
         Parent root = null;
         FXMLLoader loader = null;
 
         try {
-            loader = new FXMLLoader(this.getClass().getResource(("/add_password_dialog.fxml")));
+            loader = new FXMLLoader(this.getClass().getResource(("/entity_dialog.fxml")));
             root = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,14 +51,14 @@ public class AddPasswordDialog<Pair> extends Dialog {
         });
 
         this.getDialogPane().setContent(root);
-        this.setTitle("Add password");
+        this.setTitle(title);
+        controller.setMessageValue(message);
         this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
     }
 
-    public AddPasswordDialog(Authenticator authenticator, String place, String userName, String note){
-        this(authenticator);
+    public EntityDialog(Authenticator authenticator, String place, String userName, String note, String title, String message){
+        this(authenticator, title, message);
         setFieldValues(place, userName, note);
-        controller.setMessageValue("Main password incorrect.");
     }
 
 

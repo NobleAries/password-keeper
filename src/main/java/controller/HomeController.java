@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.util.Pair;
 import persistence.CsvPersistenceManager;
 import model.credentials.CredentialsEntity;
-import view.dialog.AddPasswordDialog;
+import view.dialog.EntityDialog;
 
 
 public class HomeController extends Controller{
@@ -44,7 +43,7 @@ public class HomeController extends Controller{
 
     @FXML
     protected void handleAddButtonAction(ActionEvent event){
-        AddPasswordDialog addPasswordDialog = new AddPasswordDialog(authenticator);
+        EntityDialog addPasswordDialog = new EntityDialog(authenticator, EntityDialog.ADD_PASSWORD_TITLE, "");
         Optional<Pair<Boolean, CredentialsEntity>> result = addPasswordDialog.showAndWait();
 
         while (result.isPresent()) {
@@ -54,7 +53,12 @@ public class HomeController extends Controller{
             }
             else {
                 CredentialsEntity credentialsEntity = result.get().getValue();
-                addPasswordDialog = new AddPasswordDialog(authenticator, credentialsEntity.getPlace(), credentialsEntity.getUsername(), credentialsEntity.getNote());
+                addPasswordDialog = new EntityDialog(   authenticator,
+                                                        credentialsEntity.getPlace(),
+                                                        credentialsEntity.getUsername(),
+                                                        credentialsEntity.getNote(),
+                                                        EntityDialog.ADD_PASSWORD_TITLE,
+                                                        "Main password incorrect");
                 result = addPasswordDialog.showAndWait();
             }
             saveCredentials(credentials);
@@ -66,6 +70,43 @@ public class HomeController extends Controller{
         ObservableList<CredentialsEntity> credentialsEntities = tableView.getSelectionModel().getSelectedItems();
         credentials.removeAll(credentialsEntities);
         saveCredentials(credentials);
+    }
+
+    @FXML
+    protected void handleEditButtonAction(ActionEvent event){
+        ObservableList<CredentialsEntity> credentialsEntities = tableView.getSelectionModel().getSelectedItems();
+
+        if(credentialsEntities.size() == 1){
+            CredentialsEntity currentEntity = credentialsEntities.get(0);
+            EntityDialog addPasswordDialog = new EntityDialog(  authenticator,
+                                                                currentEntity.getPlace(),
+                                                                currentEntity.getUsername(),
+                                                                currentEntity.getNote(),
+                                                                EntityDialog.EDIT_PASSWORD_TITLE,
+                                                                "");
+            Optional<Pair<Boolean, CredentialsEntity>> result = addPasswordDialog.showAndWait();
+
+            while (result.isPresent()) {
+                if(result.get().getKey()) {
+                    credentials.set(credentials.indexOf(currentEntity), result.get().getValue());
+                    result = Optional.empty();
+                }
+                else {
+                    CredentialsEntity credentialsEntity = result.get().getValue();
+                    addPasswordDialog = new EntityDialog(   authenticator,
+                                                            credentialsEntity.getPlace(),
+                                                            credentialsEntity.getUsername(),
+                                                            credentialsEntity.getNote(),
+                                                            EntityDialog.EDIT_PASSWORD_TITLE,
+                                                            "Main password incorrect");
+                    result = addPasswordDialog.showAndWait();
+                }
+                saveCredentials(credentials);
+            }
+        }
+        else{
+            // TODO Add dialog with information that user can edit precisely one item at a time.
+        }
     }
 
 
