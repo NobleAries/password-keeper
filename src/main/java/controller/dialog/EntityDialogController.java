@@ -5,7 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import view.SafePasswordField;
 
-public class AddPasswordDialogController {
+public class EntityDialogController {
 
     @FXML private TextField place;
     @FXML private TextField userName;

@@ -13,7 +13,7 @@
 
   <padding><Insets top="15" right="15" bottom="15" left="15" /></padding>
 
-  <TableView fx:id="tableView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+  <TableView fx:id="tableView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3">
       <columns>
 
           <TableColumn text="Place">
@@ -47,5 +47,7 @@
             GridPane.columnIndex="0" GridPane.rowIndex="1"/>
     <Button fx:id="deleteButton" text="Delete" onAction="#handleDeleteButtonAction"
             GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <Button fx:id="editButton" text="Edit" onAction="#handleEditButtonAction"
+            GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
 </GridPane>

@@ -5,7 +5,7 @@
 <?import view.SafePasswordField?>
 
 <?import javafx.scene.text.Text?>
-<AnchorPane prefHeight="224.0" prefWidth="321.0" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.dialog.AddPasswordDialogController">
+<AnchorPane prefHeight="224.0" prefWidth="321.0" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.dialog.EntityDialogController">
     <children>
         <GridPane prefHeight="160.0" prefWidth="310.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
