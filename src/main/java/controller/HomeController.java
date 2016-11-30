@@ -89,7 +89,7 @@ public class HomeController extends Controller{
             while (result.isPresent()) {
                 if(result.get().getKey()) {
                     credentials.set(credentials.indexOf(currentEntity), result.get().getValue());
-                    result = Optional.empty();
+                    break;
                 }
                 else {
                     CredentialsEntity credentialsEntity = result.get().getValue();
