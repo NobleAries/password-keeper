@@ -78,13 +78,13 @@ public class HomeController extends Controller{
 
         if(credentialsEntities.size() == 1){
             CredentialsEntity currentEntity = credentialsEntities.get(0);
-            EntityDialog addPasswordDialog = new EntityDialog(  authenticator,
+            EntityDialog entityDialog = new EntityDialog(  authenticator,
                                                                 currentEntity.getPlace(),
                                                                 currentEntity.getUsername(),
                                                                 currentEntity.getNote(),
                                                                 EntityDialog.EDIT_PASSWORD_TITLE,
                                                                 "");
-            Optional<Pair<Boolean, CredentialsEntity>> result = addPasswordDialog.showAndWait();
+            Optional<Pair<Boolean, CredentialsEntity>> result = entityDialog.showAndWait();
 
             while (result.isPresent()) {
                 if(result.get().getKey()) {
@@ -93,13 +93,13 @@ public class HomeController extends Controller{
                 }
                 else {
                     CredentialsEntity credentialsEntity = result.get().getValue();
-                    addPasswordDialog = new EntityDialog(   authenticator,
+                    entityDialog = new EntityDialog(   authenticator,
                                                             credentialsEntity.getPlace(),
                                                             credentialsEntity.getUsername(),
                                                             credentialsEntity.getNote(),
                                                             EntityDialog.EDIT_PASSWORD_TITLE,
                                                             "Main password incorrect");
-                    result = addPasswordDialog.showAndWait();
+                    result = entityDialog.showAndWait();
                 }
                 saveCredentials(credentials);
             }
