@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.collections.FXCollections;
@@ -49,6 +50,7 @@ public class HomeController extends Controller{
         while (result.isPresent()) {
             if(result.get().getKey()) {
                 credentials.add(result.get().getValue());
+                saveCredentials(credentials);
                 break;
             }
             else {
@@ -61,7 +63,6 @@ public class HomeController extends Controller{
                                                         "Main password incorrect");
                 result = addPasswordDialog.showAndWait();
             }
-            saveCredentials(credentials);
         }
     }
 
@@ -89,6 +90,7 @@ public class HomeController extends Controller{
             while (result.isPresent()) {
                 if(result.get().getKey()) {
                     credentials.set(credentials.indexOf(currentEntity), result.get().getValue());
+                    saveCredentials(credentials);
                     break;
                 }
                 else {
@@ -101,11 +103,15 @@ public class HomeController extends Controller{
                                                             "Main password incorrect");
                     result = entityDialog.showAndWait();
                 }
-                saveCredentials(credentials);
             }
         }
         else{
-            // TODO Add dialog with information that user can edit precisely one item at a time.
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information");
+            alert.setHeaderText(null);
+            alert.setContentText("You can edit only one item at a time.");
+
+            alert.showAndWait();
         }
     }
 
