@@ -32,6 +32,12 @@ public class HomeController extends Controller{
         try {
             credentials = FXCollections.observableArrayList(csvPersistenceManager.loadCredentials());
         } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Could not load any passwords.");
+
+            alert.showAndWait();
             e.printStackTrace();
         }
     }
@@ -109,7 +115,10 @@ public class HomeController extends Controller{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information");
             alert.setHeaderText(null);
-            alert.setContentText("You can edit only one item at a time.");
+            if(credentialsEntities.size() == 0)
+                alert.setContentText("You must select the item to edit.");
+            else
+                alert.setContentText("You can edit only one item at a time.");
 
             alert.showAndWait();
         }
@@ -120,6 +129,12 @@ public class HomeController extends Controller{
         try {
             csvPersistenceManager.saveCredentials(credentials);
         } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Could not save the passwords.");
+
+            alert.showAndWait();
             e.printStackTrace();
         }
     }

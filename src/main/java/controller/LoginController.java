@@ -1,8 +1,11 @@
 package controller;
 
 import java.io.IOException;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 
 import view.SafePasswordField;
@@ -24,8 +27,15 @@ public class LoginController extends Controller {
                 passwordValid.setText("Password incorrect!");
 
         } catch (IOException | IllegalAccessException | NoSuchFieldException e) {
-            passwordValid.setText("Could not access database, please restart application.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("There was a serious error while accessing database.");
+            alert.setContentText("The application will stop.");
+            alert.showAndWait();
+
             e.printStackTrace();
+
+            Platform.exit();
         }
     }
 

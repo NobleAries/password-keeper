@@ -2,8 +2,10 @@ package view.dialog;
 
 import controller.dialog.EntityDialogController;
 import encryption.EncryptionException;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ButtonType;
@@ -44,6 +46,12 @@ public class EntityDialog<Pair> extends Dialog {
                                                                                         controller.getMainPasswordValue(),
                                                                                         controller.getNoteValue()));
                 } catch (EncryptionException | IllegalAccessException | NoSuchFieldException | IOException e) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Could not retrieve main password.");
+                    alert.showAndWait();
+
                     e.printStackTrace();
                 }
 
